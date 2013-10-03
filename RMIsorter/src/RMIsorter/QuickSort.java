@@ -4,7 +4,7 @@ package RMIsorter;
 
 import java.util.Arrays;
 
-public class QuickSort {
+public class QuickSort implements ISorter {
 
 	public static Comparable[] quickSort (Comparable comparableArray[], int lowIndex, int highIndex){
 		
@@ -53,6 +53,12 @@ public class QuickSort {
 	
 	private static int getMedianIndexAsPivotIndex(int lowIndex, int highIndex) {
 		return lowIndex+((highIndex-lowIndex)/2);
+	}
+
+	@Override
+	public Comparable[] sort(Comparable[] values) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
