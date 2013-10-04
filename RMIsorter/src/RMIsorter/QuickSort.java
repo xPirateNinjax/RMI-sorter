@@ -2,9 +2,16 @@ package RMIsorter;
 
 
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Arrays;
 
-public class QuickSort implements ISorter {
+public class QuickSort extends UnicastRemoteObject implements ISorter {
+
+	protected QuickSort() throws RemoteException {
+		super();
+		
+	}
 
 	public static Comparable[] quickSort (Comparable comparableArray[], int lowIndex, int highIndex){
 		

@@ -8,7 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
  * @author Peter van Meijgaard & Frank Oyevaar
  *
  */
-public class BubbleSort  implements ISorter{
+public class BubbleSort extends UnicastRemoteObject implements ISorter{
 
 	@Override
 	public Comparable[] sort(Comparable[] sorteerObject) {
