@@ -15,6 +15,7 @@ public class SortClient {
 	 */
 	public static void main(String[] args) {
 		SortClient sc = new SortClient();
+		sc.sort();
 		ISortFactory myServer = null;
 		try {
 			myServer = (ISortFactory) Naming.lookup("rmi://"
