@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 
 public interface ISorter extends Remote{
 
-	Comparable[] sort(Comparable[] values);
+	Comparable[] sort(Comparable[] c) throws RemoteException;
 
 
 }

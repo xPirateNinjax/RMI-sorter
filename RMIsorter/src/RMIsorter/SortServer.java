@@ -9,10 +9,10 @@ public class SortServer {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		SortFactory sf;
+		ISortFactory sf;
 		try {
 			sf = new SortFactory();
-			Naming.bind("rmi://" + "localhost" + "/RMIsorter", sf);
+			Naming.bind("//localhost:1099/SortFactory", sf);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
