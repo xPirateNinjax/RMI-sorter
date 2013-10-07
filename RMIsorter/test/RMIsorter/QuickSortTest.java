@@ -42,7 +42,7 @@ public class QuickSortTest {
 	public void testSpeciale() throws RemoteException {
 		QuickSort quickSorter = new QuickSort();
 		Comparable[] test = { 5, 5, 6, 6, 4, 4, 5, 5, 4, 4, 6, 6, 5, 5 };
-		Comparable[] outcome = quickSorter.quickSort(test, 0, test.length - 1);
+		Comparable[] outcome = quickSorter.sort(test);
 		if (!validate(test)) {
 			fail("Should not happen");
 		}
@@ -53,7 +53,7 @@ public class QuickSortTest {
 	public void testLetters() throws RemoteException {
 		QuickSort quickSorter = new QuickSort();
 		Comparable[] test = { "a", "A", "Z", "d", "E", "F", "o", "e" };
-		Comparable[] outcome = quickSorter.quickSort(test, 0, test.length - 1);
+		Comparable[] outcome = quickSorter.sort(test);
 		if (!validate(test)) {
 			fail("Should not happen");
 		}
@@ -64,7 +64,7 @@ public class QuickSortTest {
 	public void testWoorden() throws RemoteException {
 		QuickSort quickSorter = new QuickSort();
 		Comparable[] test = { "Hello ", "Hell ", "Hallo ", "Help ", "Halt " };
-		Comparable[] outcome = quickSorter.quickSort(test, 0, test.length - 1);
+		Comparable[] outcome = quickSorter.sort(test);
 		if (!validate(test)) {
 			fail("Should not happen");
 		}
@@ -92,7 +92,7 @@ public class QuickSortTest {
 		QuickSort quickSorter = new QuickSort();
 		@SuppressWarnings("rawtypes")
 		Comparable[] array = { 5, 8, 3, 200, 57 };
-		Comparable[] outcome = quickSorter.quickSort(array, 0, array.length - 1);
+		Comparable[] outcome = quickSorter.sort(array);
 		System.out.println("GequickSorteerde array: " + Arrays.asList(array));
 		Comparable[] correctArray = { 3, 5, 8, 57, 200 };
 		assertArrayEquals(correctArray, array);

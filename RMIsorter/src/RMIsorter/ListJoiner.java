@@ -13,9 +13,10 @@ import java.util.Observer;
  */
 public class ListJoiner implements Observer {
 	
-	public int lastThreadNumber = 0;
-	public int nThreads;
-	public Comparable[] restoredArray;
+	private int lastThreadNumber = 0;
+	private int nThreads;
+	private Comparable[][] list;
+	private Comparable[] restoredArray;
 	
 	public ListJoiner(int t){
 		this.nThreads = t;
@@ -32,11 +33,18 @@ public class ListJoiner implements Observer {
 		return lastThreadNumber;
 	}
 	
-	public void join(ArrayList<Comparable[]> c2){
+	public void join(Comparable[][] a){
+		ArrayList<Comparable> c = new ArrayList<Comparable>();
+		for (int k = 0; k < a.length; k++) {
+			for (int l = 0; l < a[k].length; l++) {
+				c.add(a[k][l]);
+			}
+		}
+		restoredArray =	c.toArray(new Comparable[c.size()]);
 		
-		ArrayList<Comparable[]> d = c2;
-		List<ArrayList<Comparable[]>> c = Arrays.asList(d);
-		this.restoredArray = (Comparable[]) c.toArray();
+//		ArrayList<Comparable[]> d = a;
+//		List<ArrayList<Comparable[]>> c = Arrays.asList(d);
+//		this.restoredArray = (Comparable[]) c.toArray();
 		
 	}
 	
@@ -47,7 +55,13 @@ public class ListJoiner implements Observer {
 	@Override
 	public void update(Observable obs, Object o) {
 		if (obs instanceof SorterThread) {
+			Comparable[] sortedList = ((SorterThread) obs).getList();
+			list[((SorterThread) obs).getThreadNumber()] = sortedList;
 			this.lastThreadNumber++;	
+			if (lastThreadNumber == nThreads) {
+				join(list);
+				printJoinedList();
+			}
 		}
 		
 	}

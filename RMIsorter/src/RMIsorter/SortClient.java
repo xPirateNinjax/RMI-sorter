@@ -32,21 +32,12 @@ public class SortClient {
 		for(int i = 0; i < c.size(); i++){
 			
 				sorter.sort(c.get(i));
+				System.out.println(Arrays.asList(c.get(i)));
+				Comparable[] result = sorter.sort(c.get(i));
+				System.out.println(Arrays.asList(result));
 				
-			
-		
 		}
-		System.out.println(Arrays.asList(c));
-//		lj.join(c);
-//		lj.printJoinedList();
-//		ArrayList<Comparable[]> lists = splice(list);
-//		for(@SuppressWarnings("rawtypes") Comparable[] lst : lists) 
-//		{
-//			ISorter sorter1 = sf.createSorter();
-//			Comparable[] result = sorter1.sort(lst);
-//			lj.join(result);
-//			System.out.println(Arrays.asList(result));
-//		} 
+		
 
 
 	}

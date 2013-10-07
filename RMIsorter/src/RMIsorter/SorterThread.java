@@ -49,4 +49,8 @@ public class SorterThread extends Observable implements Runnable {
 		return sortedList;
 	}
 
+	public Comparable[] getList() {
+		return list;
+	}
+
 }
