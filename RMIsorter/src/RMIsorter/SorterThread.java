@@ -22,7 +22,7 @@ public class SorterThread extends Observable implements Runnable {
 
 		this.SorteerThread = new Thread(this);
 		this.list = c;
-		System.out.println(Arrays.asList(c));
+		//System.out.println(Arrays.asList(c));
 		this.threadNummer = i;
 		this.SorteerThread.start();
 	}

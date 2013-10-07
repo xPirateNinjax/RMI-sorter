@@ -50,7 +50,7 @@ public class ListJoiner implements Observer {
 	}
 	
 	public void printJoinedList(){
-		System.out.println(Arrays.asList(restoredArray));
+		System.out.println("Gesorteerde array:" + Arrays.asList(restoredArray));
 	}
 	
 	@Override
@@ -61,7 +61,7 @@ public class ListJoiner implements Observer {
 			int threadVolgnr = ((SorterThread) obs).getThreadNumber();
 			volgordeList[threadVolgnr] = restoredArray;			
 			this.lastThreadNumber++;
-			System.out.println("Threads: " + lastThreadNumber);
+			//System.out.println("Threads: " + lastThreadNumber);
 			if (lastThreadNumber == nThreads) {
 				System.out.println("Gaat nu joinen");
 				join(volgordeList);
