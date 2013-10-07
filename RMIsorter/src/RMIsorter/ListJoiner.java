@@ -15,7 +15,7 @@ public class ListJoiner implements Observer {
 	
 	private int lastThreadNumber = 0;
 	private int nThreads;
-	private Comparable[][] list;
+	private Comparable[][] volgordeList;
 	private Comparable[] restoredArray;
 	
 	public ListJoiner(int t){
@@ -54,12 +54,16 @@ public class ListJoiner implements Observer {
 	
 	@Override
 	public void update(Observable obs, Object o) {
+//		System.out.println("test");
 		if (obs instanceof SorterThread) {
-			Comparable[] sortedList = ((SorterThread) obs).getList();
-			list[((SorterThread) obs).getThreadNumber()] = sortedList;
-			this.lastThreadNumber++;	
+			restoredArray = ((SorterThread) obs).getList();
+			int threadVolgnr = ((SorterThread) obs).getThreadNumber();
+			volgordeList[threadVolgnr] = restoredArray;			
+			this.lastThreadNumber++;
+			System.out.println("Threads: " + lastThreadNumber);
 			if (lastThreadNumber == nThreads) {
-				join(list);
+				System.out.println("Gaat nu joinen");
+				join(volgordeList);
 				printJoinedList();
 			}
 		}

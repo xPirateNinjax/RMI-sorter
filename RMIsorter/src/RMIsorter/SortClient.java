@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class SortClient {
+	
+	private static int range = 1000;
 
 	/**
 	 * @param args
@@ -23,22 +25,25 @@ public class SortClient {
 	public static void main(String[] args) throws MalformedURLException,
 			RemoteException, NotBoundException {
 		SortClient sc = new SortClient();
-		ListJoiner lj = new ListJoiner(0);
+
 		Comparable[] list = generateRandomList(100, Integer.class);
-		System.out.println(Arrays.asList(list));
+		// System.out.println(Arrays.asList(list));
 		ISortFactory sf = (ISortFactory) Naming.lookup("SortFactory");
 		ISorter sorter = sf.createSorter();
 		ArrayList<Comparable[]> c = splice(list);
-		for(int i = 0; i < c.size(); i++){
-			
-				sorter.sort(c.get(i));
-				System.out.println(Arrays.asList(c.get(i)));
-				Comparable[] result = sorter.sort(c.get(i));
-				System.out.println(Arrays.asList(result));
-				
-		}
-		
+		ListJoiner lj = new ListJoiner(c.size());
+		for (int i = 0; i < c.size(); i++) {
 
+			SorterThread st = new SorterThread(c.get(i), i);
+			st.addObserver(lj);
+			// sorter.sort(c.get(i));
+			// System.out.println("Ongesorteerde list" + i + " " +
+			// Arrays.asList(c.get(i)));
+			// Comparable[] result = sorter.sort(c.get(i));
+			// System.out.println("Sorted list: " + i + " " +
+			// Arrays.asList(result));
+
+		}
 
 	}
 
@@ -70,7 +75,7 @@ public class SortClient {
 		Comparable[] c = new Comparable[length];
 
 		for (int i = 0; i < length; i++) {
-			c[i] = (int) (Math.random() * 1000);
+			c[i] = (int) (Math.random() * range);
 		}
 		// System.out.println(Arrays.asList(c));
 
@@ -137,32 +142,76 @@ public class SortClient {
 		return c;
 	}
 
-	public static ArrayList<Comparable[]> splice(Comparable[] a) {
+//	public static ArrayList<Comparable[]> splice(Comparable[] a) {
+//
+//		ArrayList<Comparable[]> splitArray = new ArrayList<Comparable[]>();
+//		int aantalDelen = 5;
+//		int grens = range / aantalDelen;
+//		
+//		for(int i = 0; i < aantalDelen; i++){
+//			ArrayList<Comparable[]> arrayStuk = new ArrayList<Comparable[]>();
+//			
+//			for(int j = 0; j < range; j++){
+//				
+//			}
+//		}
 
-		ArrayList<Comparable[]> splitArray = new ArrayList<Comparable[]>();
+//		for (int i = 0; i < aantalDelen; i++) {
+//			Comparable[] arrayStuk = null;
+//
+//			if (i + aantalDelen < a.length) {
+//				arrayStuk = Arrays.copyOfRange(a, i * (a.length / aantalDelen),
+//						(i + 1) * (a.length / aantalDelen));
+//
+//			}
+//
+//			splitArray.add(arrayStuk);
+//		}
+
+		// for (int i = 0; i < aantalDelen; i++) {
+		// System.out.printf("[ ");
+		// for (int k = 0; k < a.length / aantalDelen; k++) {
+		// System.out.printf(" " + splitArray.get(i)[k] + " ");
+		// }
+		// System.out.printf("]\n");
+		// }
+
+//		return splitArray;
+//	}
+//
+//}
+	public static ArrayList<Comparable[]> splice(Comparable[] splice) {
+		ArrayList<Comparable> invoer = new ArrayList<Comparable>(
+				Arrays.asList(splice));
+		ArrayList<ArrayList<Comparable>> lijst = new ArrayList<ArrayList<Comparable>>();
+		
 		int aantalDelen = 5;
+		int grens = range / aantalDelen;
 
-		for (int i = 0; i < aantalDelen; i++) {
-			Comparable[] arrayStuk = null;
+		for (int k = 0; k < aantalDelen; k++) {
+			ArrayList<Comparable> arrayDeel = new ArrayList<Comparable>();
+			int bovenGrens = (k + 1) * grens;
+			// ArrayList<Comparable> gedeelteVanInvoer = new ArrayList();
 
-			if (i + aantalDelen < a.length) {
-				arrayStuk = Arrays.copyOfRange(a, i * (a.length / aantalDelen),
-						(i + 1) * (a.length / aantalDelen));
-
+			for (int j = 0; j < invoer.size(); j++) {
+				if (((Comparable) invoer.get(j)).compareTo(bovenGrens) <= 0) {
+					arrayDeel.add(invoer.get(j));
+					invoer.remove(j);
+					j--;
+				}
 			}
 
-			splitArray.add(arrayStuk);
+			lijst.add(arrayDeel);
 		}
-
-		for (int i = 0; i < aantalDelen; i++) {
-			System.out.printf("[ ");
-			for (int k = 0; k < a.length / aantalDelen; k++) {
-				System.out.printf(" " + splitArray.get(i)[k] + " ");
-			}
-			System.out.printf("]\n");
-		}
-
-		return splitArray;
+		return arrayListToArray(lijst);
 	}
-
+	public static ArrayList<Comparable[]> arrayListToArray(
+			ArrayList<ArrayList<Comparable>> lijst) {
+		ArrayList<Comparable[]> uitvoer = new ArrayList<Comparable[]>();
+		for (int i = 0; i < lijst.size(); i++) {
+			uitvoer.add(lijst.get(i).toArray(
+					new Comparable[lijst.get(i).size()]));
+		}
+		return uitvoer;
+	}
 }
